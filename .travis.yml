@@ -2,7 +2,7 @@
 language: python
 sudo: false
 script:
- - true
+ - false
 branches:
     only:
         - master
