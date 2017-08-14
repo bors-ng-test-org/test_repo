@@ -6,6 +6,9 @@ tasks:
       github:
         events:
           - push
+        branches:
+          - staging
+          - trying
     payload:
       maxRunTime: 3600
       image: jimmycuadra/rust
