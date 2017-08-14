@@ -7,6 +7,9 @@ tasks:
       github:
         events:
           - push
+          - pull_request.opened
+          - pull_request.synchronize
+          - pull_request.reopened
         branches:
           - staging
           - trying
