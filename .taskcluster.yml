@@ -1,5 +1,5 @@
 version: 0
-allowPullRequests: true
+allowPullRequests: public
 tasks:
   - provisionerId: '{{ taskcluster.docker.provisionerId }}'
     workerType: '{{ taskcluster.docker.workerType }}'
