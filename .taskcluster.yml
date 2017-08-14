@@ -55,4 +55,4 @@ tasks:
       name: basic test
       description: 'will echo the readme, and distinguish itself as a pull request builder'
       owner: '{{ event.head.user.email }}'
-source: '{{ event.head.repo.url }}'
+      source: '{{ event.head.repo.url }}'
