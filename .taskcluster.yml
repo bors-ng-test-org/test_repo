@@ -1,15 +1,14 @@
+
 version: 0
 allowPullRequests: public
 tasks:
+  # The bors build queue
   - provisionerId: '{{ taskcluster.docker.provisionerId }}'
     workerType: '{{ taskcluster.docker.workerType }}'
     extra:
       github:
         events:
           - push
-          - pull_request.opened
-          - pull_request.synchronize
-          - pull_request.reopened
         branches:
           - staging
           - trying
@@ -29,3 +28,31 @@ tasks:
       description: 'will echo the readme, just to check some stuff'
       owner: '{{ event.head.user.email }}'
       source: '{{ event.head.repo.url }}'
+  # The pull request builder
+  - provisionerId: '{{ taskcluster.docker.provisionerId }}'
+    workerType: '{{ taskcluster.docker.workerType }}'
+    extra:
+      github:
+        events:
+          - pull_request.opened
+          - pull_request.synchronize
+          - pull_request.reopened
+        branches:
+          - master
+    payload:
+      maxRunTime: 3600
+      image: jimmycuadra/rust
+      command:
+        - /bin/bash
+        - '--login'
+        - '-c'
+        - >-
+          git clone {{event.head.repo.url}} repo && cd repo &&
+          git config advice.detachedHead false && git checkout {{event.head.sha}} &&
+          echo "Pull request" &&
+          cat README.md
+    metadata:
+      name: basic test
+      description: 'will echo the readme, and distinguish itself as a pull request builder'
+      owner: '{{ event.head.user.email }}'
+source: '{{ event.head.repo.url }}'
