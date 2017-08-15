@@ -1,6 +1,6 @@
 status = [
   "continuous-integration/travis-ci/push",
   "continuous-integration/appveyor/branch",
-  "Taskcluster (push)"
+  "Taskcluster (push)",
 ]
 delete-merged-branches = true
